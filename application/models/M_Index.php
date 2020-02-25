@@ -10,7 +10,7 @@ class M_Index extends CI_Model {
         return $this->db->get('tb_siswa')->result();
     }
     function deleteData($noinduk){
-        $this->where('noinduk', $noinduk);
+        $this->db->where('noinduk', $noinduk);
         return $this->db->delete('tb_siswa');
     }
     function insertData($data) {

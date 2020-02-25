@@ -32,6 +32,7 @@ class C_Index extends CI_Controller {
 
         $data    = ['noinduk' => $noinduk, 'nama' => $nama, 'alamat' => $alamat, 'hobi' => $hobi];
         $data    = $this->M_Index->insertData($data);
+        print_r($data);die();
         echo json_encode($data);
     }
     function updateData() {

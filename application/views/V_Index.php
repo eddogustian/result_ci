@@ -76,7 +76,6 @@
      <!-- Modal Edit-->
     <div id="editModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-    
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -145,11 +144,12 @@
 
         //hapus data dengan konfirmasi
         $("#tbl_data").on('click','.btn_hapus', function() {
+            // alert('masuk hapus');
             var noinduk = $(this).attr('data-id');
             var status = confirm('yakin ingin mengahapus?');
             if(status){
                 $.ajax({
-                    url: '<?php echo base_url(); ?>C_Index/hapusData',
+                    url: '<?php echo base_url(); ?>C_Index/deleteData',
                     type: 'POST',
                     data: {noinduk:noinduk},
                     success: function(response){
@@ -157,7 +157,7 @@
                     }
                 })
             }
-        })
+        }) //tutup delete data
         //menambahkan data ke database
         $("#btn_add_data").on('click', function() {
             var noinduk = $('input[name="noinduk"]').val();
@@ -167,7 +167,7 @@
             $.ajax({
                 url: '<?php echo base_url(); ?>C_Index/addData',
                 type: 'POST',
-                data: {noindul:noinduk, nama:nama, alamat:alamat, hovi:hobi},
+                data: {noinduk:noinduk, nama:nama, alamat:alamat, hobi:hobi},
                 success: function(response) {
                     $('input[name="noinduk"]').val("");
                     $('input[name="nama"]').val("");
@@ -178,6 +178,28 @@
                 }
             })
 
-        });
+        }); //tutup tambah data
+
+        // Memunculkan modal edit
+        $("#tbl_data").on('click','.btn_edit', function(){
+            // alert('masuk edit');
+            var noinduk = $(this).attr('data-id');
+            $.ajax({
+                url: '<?php echo base_url(); ?>C_Index/getDataByNoinduk',
+                type: 'POST',
+                data: {noinduk:noinduk},
+                dataType: 'json',
+                success: function(response){
+                    console.log(response);
+                    $("editModal").modal('show');
+                    $('input[name="noinduk_edit"]').val(response[0].noinduk);
+                    $('input[name="nama_edit"]').val(response[0].nama);
+                    $('input[name="alamat_edit"]').val(response[0].alamat);
+                    $('input[name="hobi_edit"]').val(response[0].hobi);
+                }
+            })
+        }); //tutup muncul modal edit
+
+        
     }); //tutup doc ready
 </script>
