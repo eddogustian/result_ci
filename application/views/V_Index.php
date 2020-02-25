@@ -191,7 +191,7 @@
                 dataType: 'json',
                 success: function(response){
                     console.log(response);
-                    $("editModal").modal('show');
+                    $("#editModal").modal('show');
                     $('input[name="noinduk_edit"]').val(response[0].noinduk);
                     $('input[name="nama_edit"]').val(response[0].nama);
                     $('input[name="alamat_edit"]').val(response[0].alamat);
@@ -200,6 +200,26 @@
             })
         }); //tutup muncul modal edit
 
+        //meng-update data
+        $("#btn_update_data").on('click',function(){
+            var noinduk  = $('input[name="noinduk_edit"]').val();
+            var nama     = $('input[name="nama_edit"]').val();
+            var alamat   = $('input[name="alamat_edit"]').val();
+            var hobi     = $('input[name="hobi_edit"]').val();
+            $.ajax({
+                url: '<?php echo base_url(); ?>C_Index/updateData',
+                type: 'POST',
+                data: {noinduk:noinduk,nama:nama,alamat:alamat,hobi:hobi},
+                success: function(response){
+                    $('input[name="noinduk_edit"]').val();
+                    $('input[name="nama_edit"]').val();
+                    $('input[name="alamat_edit"]').val();
+                    $('input[name="hobi_edit"]').val();
+                    $("#editModal").modal('hide');
+                    getData();
+                }
+            })
+        });
         
     }); //tutup doc ready
 </script>
